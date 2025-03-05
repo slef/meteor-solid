@@ -1,29 +1,26 @@
 Package.describe({
-  name: 'edemaine:solid',
-  version: '0.2.3',
-  summary: 'Compiler plugin for SolidJS including SSR',
+  name: 'slef:solid-meteor',
+  version: '0.1.0',
+  summary: 'Compiler plugin for SolidJS including SSR, compatible with Meteor 3',
   documentation: 'README.md',
-  git: 'https://github.com/edemaine/meteor-solid.git',
+  git: 'https://github.com/slef/meteor-solid.git',
 });
 
 Package.registerBuildPlugin({
   name: 'compile-solid',
   use: [
     'babel-compiler',
-    'caching-compiler@1.2.1',
+    'caching-compiler@2.0.1',  // Updated from 1.2.1 to be compatible with Meteor 3
     'coffeescript-compiler@2.4.1',
   ],
   sources: ['plugin.js'],
   npmDependencies: {
     micromatch: '4.0.4',
-    // implied by https://github.com/meteor/meteor/blob/devel/npm-packages/meteor-babel/package.json
-    //"@babel/plugin-proposal-class-properties": "7.16.7",
-    //"@babel/preset-react": "7.16.7",
   },
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('2.5.3');
+  api.versionsFrom('3.0');  // Updated from 2.5.3 to 3.0
   api.use('isobuild:compiler-plugin@1.0.0');
   api.use('babel-compiler');
   api.use('coffeescript-compiler@2.4.1', {weak: true});
@@ -34,7 +31,8 @@ Package.onUse(function(api) {
   api.imply('modules');
   api.imply('ecmascript-runtime');
   api.imply('babel-runtime');
-  api.imply('promise');
+  // Using promise@1.0.0 instead of older versions for Meteor 3 compatibility
+  api.imply('promise@1.0.0');
 
   // Runtime support for Meteor 1.5 dynamic import(...) syntax.
   api.imply('dynamic-import');
